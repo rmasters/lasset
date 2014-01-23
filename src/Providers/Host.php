@@ -2,9 +2,7 @@
 
 namespace Lasset\Providers;
 
-use Lasset\Provider;
-
-class Host implements Provider
+class Host extends Provider
 {
     protected $baseUrl;
 

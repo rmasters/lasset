@@ -54,8 +54,41 @@ class ManagerTest extends PHPUnit_Framework_TestCase
         $this->assertEquals('barfoo', $lasset->url('foobar'));
     }
 
+    public function testConfigure()
+    {
+        $lasset = new Manager;
+
+        $lasset->configure(array(
+            'environments' => array(
+                'local' => array(
+                    'provider' => 'Lasset\Providers\Host',
+                    'options' => array(
+                        'baseUrl' => '/components',
+                    ),
+                ),
+            ),
+        ));
+        $this->assertInstanceOf('Lasset\Providers\Host', $lasset->getProvider('local'));
+        $this->assertEquals('/components/foobar', $lasset->getProvider('local')->url('foobar'));
+
+        $lasset->configure(array('environments' => array('testing' => 'StubProvider')));
+        $this->assertInstanceOf('StubProvider', $lasset->getProvider('testing'));
+
+        $this->setExpectedException('InvalidArgumentException', 'Lasset config for environment broken1, provider must implement Lasset\Providers\ProviderInterface');
+        $lasset->configure(array('environments' => array('broken1' => new \stdclass)));
+
+        $this->setExpectedException('InvalidArgumentException', 'Lasset config for environment broken2, provider must implement Lasset\Providers\ProviderInterface');
+        $lasset->configure(array('environments' => array('broken2' => 'ArrayObject')));
+
+        $this->setExpectedException('InvalidArgumentException', 'Lasset config for environment broken3 expects either an array or a provider');
+        $lasset->configure(array('environments' => array('broken3' => 123)));
+
+        $this->setExpectedException('InvalidArgumentException', 'Lasset config for environment broken4 must contain a \'provider\' class name');
+        $lasset->configure(array('environments' => array('broken4' => array('options' => array()))));
+    }
+
     protected function getMockProvider()
     {
-        return m::mock('Lasset\Provider');
+        return m::mock('Lasset\Providers\ProviderInterface');
     }
 }

@@ -2,6 +2,8 @@
 
 namespace Lasset;
 
+use Lasset\Providers\ProviderInterface;
+
 use InvalidArgumentException;
 
 class Manager
@@ -39,7 +41,7 @@ class Manager
         return $this->current;
     }
 
-    public function addProvider($environment, Provider $provider, $default = false)
+    public function addProvider($environment, ProviderInterface $provider, $default = false)
     {
         $this->environments[$environment] = $provider;
 
@@ -55,6 +57,45 @@ class Manager
         $this->checkEnvironment($environment);
 
         return $this->environments[$environment];
+    }
+
+    public function setProviders(array $environments)
+    {
+        foreach ($environments as $env => $provider)
+        {
+            /**
+             * Instantiate providers, we're expecting one of:
+             *   array (provider => (string|ProviderInterface), [options => array])
+             *   string|ProviderInterface
+             */
+            if (is_array($provider)) {
+                // Key: provider
+                if (!array_key_exists('provider', $provider) || !class_exists($provider['provider'])) {
+                    throw new InvalidArgumentException('Lasset config for environment ' . $env . ' must contain a \'provider\' class name');
+                }
+
+                // Key: options
+                $options = array_key_exists('options', $provider) ? $provider['options'] : array();
+
+                // Create the object with options
+                $provider = $provider['provider'];
+                $provider = new $provider($options);
+            } else if (is_string($provider) && class_exists($provider)) {
+                // A class name without options
+                $provider = new $provider;
+            } else if (!is_object($provider)) {
+                // Something weird
+                throw new InvalidArgumentException('Lasset config for environment ' . $env . ' expects either an array or a provider');
+            }
+
+            // Check we have a ProviderInterface
+            if (!$provider instanceof ProviderInterface) {
+                throw new InvalidArgumentException('Lasset config for environment ' . $env . ', provider must implement Lasset\Providers\ProviderInterface');
+            }
+
+            // Add the provider
+            $this->addProvider($env, $provider);
+        }
     }
 
     public function setDefault($environment)

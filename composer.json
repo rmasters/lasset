@@ -9,7 +9,10 @@
     "autoload": {
         "psr-4": {
             "Lasset\\": "src/"
-        }
+        },
+        "classmap": [
+            "tests/"
+        ]
     },
     "copyright": "Ross Masters 2013",
     "license": "MIT",
