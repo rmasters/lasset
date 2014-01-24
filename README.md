@@ -28,7 +28,7 @@ Install using Composer: `composer require rmasters/lasset:dev-master`
 ### Standalone
 
 1.  Instantiate a manager,
-2.  Configure, with [an array](config/config.php) or by adding providers,
+2.  Configure, with [an array](src/config/config.php) or by adding providers,
 3.  Set the default environment,
 4.  Call the `url()`, function.
 
