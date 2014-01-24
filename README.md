@@ -14,6 +14,13 @@ Aims to provide configurable links for assets that are:
 -   Hosted on a different domain (e.g. `http://static.example.com/`)
 -   Presets for CDN hosting - S3, Akamai, Cloudflare, etc.
 
+## Installation
+
+Install using Composer: `composer require rmasters/lasset:dev-master`
+
+> This library uses the new PSR-4 autoloader. You might need to update composer
+> itself to use this - `composer self-update`
+
 ## Framework integrations
 
 ### Standalone
@@ -35,3 +42,27 @@ Aims to provide configurable links for assets that are:
 
     // Or to get a specific environment's url
     echo $manager->getProvider('testing')->url('jquery/jquery.min.js');
+
+### Laravel 4
+
+Bundled in this framework is a ServiceProvider and Facade for integration into
+Laravel 4. This adds the following functionality:
+
+-   A single Manager instance created under the `lasset.manager` key
+-   Facade wraps around the Manager instance
+-   Configurable by placing a file in `app/config/packages/rmasters/lasset/config.php`
+-   If it exists in the Manager (after loading configuration), the current
+    Laravel environment (the result of `App::env()`) will be set as the default
+    Lasset environment.
+
+To enable these, simply register the service provider and optionally alias the
+facade in `app/config/app.php`:
+
+    'providers' => array(
+        // ...
+        'Lasset\Laravel\LassetServiceProvider',
+    ),
+
+    'aliases' => array(
+        'Lasset' => 'Lasset\Laravel\Facades\Lasset',
+    ),

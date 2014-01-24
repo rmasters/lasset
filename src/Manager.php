@@ -21,11 +21,11 @@ class Manager
 
     public function configure(array $config)
     {
-        if (array_key_exists('environments', $config)) {
+        if (isset($config['environments'])) {
             $this->setProviders($config['environments']);
         }
 
-        if (array_key_exists('default', $config)) {
+        if (isset($config['default'])) {
             $this->setDefault($config['default']);
         }
     }
