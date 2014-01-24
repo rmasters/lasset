@@ -1,5 +1,7 @@
 # lasset: asset-linker
 
+[![Build Status](https://travis-ci.org/rmasters/lasset.png?branch=master)](https://travis-ci.org/rmasters/lasset) [![Latest Stable Version](https://poser.pugx.org/rmasters/lasset/version.png)](https://packagist.org/packages/rmasters/lasset) [![License](https://poser.pugx.org/rmasters/lasset/license.png)](https://packagist.org/packages/rmasters/lasset) [![Coverage Status](https://coveralls.io/repos/rmasters/lasset/badge.png)](https://coveralls.io/r/rmasters/lasset) [![Dependency Status](https://www.versioneye.com/user/projects/52e25122ec13753189000002/badge.png)](https://www.versioneye.com/user/projects/52e25122ec13753189000002)
+
 Providers helpers that make linking to frontend assets easy, based on your
 current environment.
 
