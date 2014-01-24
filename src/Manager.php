@@ -114,13 +114,18 @@ class Manager
         return $this->getProvider()->url($filename);
     }
 
+    public function hasEnvironment($name)
+    {
+        return array_key_exists($name, $this->environments);
+    }
+
     protected function checkEnvironment($name)
     {
         if (is_null($name)) {
             throw new InvalidArgumentException('No environment given or no default set');
         }
 
-        if (!array_key_exists($name, $this->environments)) {
+        if (!$this->hasEnvironment($name)) {
             throw new InvalidArgumentException('Unknown environment ' . $name);
         }
     }
