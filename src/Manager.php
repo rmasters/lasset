@@ -61,8 +61,7 @@ class Manager
 
     public function setProviders(array $environments)
     {
-        foreach ($environments as $env => $provider)
-        {
+        foreach ($environments as $env => $provider) {
             /**
              * Instantiate providers, we're expecting one of:
              *   array (provider => (string|ProviderInterface), [options => array])
@@ -80,10 +79,10 @@ class Manager
                 // Create the object with options
                 $provider = $provider['provider'];
                 $provider = new $provider($options);
-            } else if (is_string($provider) && class_exists($provider)) {
+            } elseif (is_string($provider) && class_exists($provider)) {
                 // A class name without options
                 $provider = new $provider;
-            } else if (!is_object($provider)) {
+            } elseif (!is_object($provider)) {
                 // Something weird
                 throw new InvalidArgumentException('Lasset config for environment ' . $env . ' expects either an array or a provider');
             }

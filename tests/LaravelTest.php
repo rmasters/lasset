@@ -21,9 +21,10 @@ class LaravelTest extends PHPUnit_Framework_TestCase
             ->once()
             ->with(
                 LassetServiceProvider::MANAGER_KEY,
-                m::on(function($cb) use ($app, &$lasset) {
+                m::on(function ($cb) use ($app, &$lasset) {
                 if (is_callable($cb)) {
                     $lasset = $cb($app);
+
                     return true;
                 }
                 })

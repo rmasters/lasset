@@ -26,6 +26,7 @@ class LassetServiceProvider extends ServiceProvider
             if (is_null($manager->getDefault()) && $manager->hasEnvironment($app['env'])) {
                 $manager->setDefault($app['env']);
             }
+
             return $manager;
         });
     }
