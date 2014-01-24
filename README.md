@@ -1,4 +1,4 @@
-# asset-linker
+# lasset: asset-linker
 
 Providers helpers that make linking to frontend assets easy, based on your
 current environment.
@@ -29,6 +29,8 @@ Install using Composer: `composer require rmasters/lasset:dev-master`
 2.  Configure, with [an array](config/config.php) or by adding providers,
 3.  Set the default environment,
 4.  Call the `url()`, function.
+
+Usage:
 
     use Lasset\Manager;
 
